@@ -1,0 +1,53 @@
+#include <DHT.h>
+
+#define DHTPIN 2           // Use digital pin 2 for the DHT11 sensor
+#define DHTTYPE DHT11      // Define the sensor type (DHT11)
+#define rainSensorPin 3    // Use digital pin 3 for the rain sensor
+#define soilMoisturePin A0 // Use analog pin A0 for the soil moisture sensor
+
+DHT dht(DHTPIN, DHTTYPE);  // Create DHT object
+
+void setup() {
+  Serial.begin(9600);      // Start serial communication
+  dht.begin();             // Initialize the DHT sensor
+  pinMode(rainSensorPin, INPUT);  // Set rain sensor pin as input
+}
+
+void loop() {
+  delay(2000); // Wait for 2 seconds between readings
+
+  // Read humidity and temperature values from DHT11
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  // Check if the readings failed and print an error message
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Failed to read from DHT sensor!");
+  } else {
+    // Print the temperature and humidity to the serial monitor
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.print(" °C  ");
+    Serial.print("Humidity: ");
+    Serial.print(humidity);
+    Serial.println(" %");
+  }
+
+  // Reading and displaying rain sensor data
+  int rainState = digitalRead(rainSensorPin); // Read the state from the rain sensor
+  if (rainState == LOW) {
+    Serial.println("Rain detected!");
+  } else {
+    Serial.println("No rain detected.");
+  }
+
+  // Reading and displaying soil moisture data
+  int sensorValue = analogRead(soilMoisturePin); // Read the analog value from the soil moisture sensor
+  float moisturePercentage = map(sensorValue, 1023, 0, 0, 100); // Map the value to percentage
+
+  Serial.print("Soil Moisture (in Percentage) = ");
+  Serial.print(moisturePercentage);
+  Serial.println("%");
+
+  delay(1000); // Delay for 1 second before reading again
+}
