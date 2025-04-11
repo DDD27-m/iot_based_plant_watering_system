@@ -48,5 +48,5 @@ void loop()
   Serial.print(moisturePercentage);
   Serial.println("%");
 
-  delay(1000); // Delay for 1 second before reading again
+  delay(1000); 
 }
