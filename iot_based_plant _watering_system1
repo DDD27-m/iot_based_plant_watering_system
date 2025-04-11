@@ -1,52 +1,26 @@
-#include <DHT.h>
+PROJECT 
+IoT Based Plant Watering System 
+Project by: DIVYA DHARSINI D , KPR INSTITUTE OF ENGINEERING AND TECHNOLOGY 
+Guided by : Dr.Prasad Joshee & Dr.Jaikumar 
 
-#define DHTPIN 2           
-#define DHTTYPE DHT11      
-#define rainSensorPin 3    
-#define soilMoisturePin A0 
-DHT dht(DHTPIN, DHTTYPE);  
+OBJECTIVE OF OUR PROJECT
+To  develop  a  smart  irrigation  system  that  optimizes  water  usage  by intelligently monitoring and regulating soil moisture levels,
+thereby reducing water wastage and ensuring efficient water management for crop cultivation
 
-void setup() 
-{
-  Serial.begin(9600);      
-  dht.begin();            
-  pinMode(rainSensorPin, INPUT);  
-}
+METHODOLOGY
+STEP 1:	Based on requirement of the society identify the type of plant.
+STEP 2:	Collect data from plant.
+STEP 3:	Transfer data to NodeMCU board.
+STEP 4:	Write Arduino code for target application.
+STEP 5:	Interface Arduino with Blynk application.
+STEP 6:	Automatically the relay get turn on or off based on the notification
 
-void loop()
-{
-  delay(2000); 
-   float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature();
-  if (isnan(humidity) || isnan(temperature)) 
-{
-    Serial.println("Failed to read from DHT sensor!");
-  } 
-else 
-{
-  
-    Serial.print("Temperature: ");
-    Serial.print(temperature);
-    Serial.print(" °C  ");
-    Serial.print("Humidity: ");
-    Serial.print(humidity);
-    Serial.println(" %");
-  }
-
-  int rainState = digitalRead(rainSensorPin);
-  if (rainState == LOW) 
-{
-    Serial.println("Rain detected!");
-  } else
-{
-    Serial.println("No rain detected.");
-  }
-  int sensorValue = analogRead(soilMoisturePin);
-  float moisturePercentage = map(sensorValue, 1023, 0, 0, 100); 
-
-  Serial.print("Soil Moisture (in Percentage) = ");
-  Serial.print(moisturePercentage);
-  Serial.println("%");
-
-  delay(1000); 
-}
+PROTOTYPE MODEL
+Sensors Used: Rain drop, temperature, and soil moisture sensors monitor
+conditions.
+Data Display: Sensor readings are shown in the Serial Monitor for real-
+time tracking.
+Relay	Control:	Future	work	includes	adding	a	relay	to	automate	motor
+control for irrigation.
+IoT Upgrade:	Integration with cloud will enable remote monitoring and control via smartphones.
+Efficient Irrigation: Ensures water is used only when necessary, reducing wastage
